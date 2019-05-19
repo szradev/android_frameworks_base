@@ -1008,19 +1008,6 @@ public class NotificationPanelViewController extends PanelViewController {
         mNotificationStackScroller.resetScrollPosition();
     }
 
-    @Override
-    public void collapse(boolean delayed, float speedUpFactor) {
-        if (!canPanelBeCollapsed()) {
-            return;
-        }
-
-        if (mQsExpanded) {
-            mQsExpandImmediate = true;
-            mNotificationStackScroller.setShouldShowShelfOnly(true);
-        }
-        super.collapse(delayed, speedUpFactor);
-    }
-
     public void closeQs() {
         cancelQsAnimation();
         setQsExpansion(mQsMinExpansionHeight);
@@ -1052,7 +1039,6 @@ public class NotificationPanelViewController extends PanelViewController {
     public void expandWithQs() {
         if (mQsExpansionEnabled) {
             mQsExpandImmediate = true;
-            mNotificationStackScroller.setShouldShowShelfOnly(true);
         }
         if (isFullyCollapsed()) {
             expand(true /* animate */);
@@ -1318,7 +1304,6 @@ public class NotificationPanelViewController extends PanelViewController {
                 < mStatusBarMinHeight) {
             mMetricsLogger.count(COUNTER_PANEL_OPEN_QS, 1);
             mQsExpandImmediate = true;
-            mNotificationStackScroller.setShouldShowShelfOnly(true);
             requestPanelHeightUpdate();
 
             // Normally, we start listening when the panel is expanded, but here we need to start
@@ -1750,7 +1735,6 @@ public class NotificationPanelViewController extends PanelViewController {
         float qsExpansionFraction = getQsExpansionFraction();
         mQs.setQsExpansion(qsExpansionFraction, getHeaderTranslation());
         mMediaHierarchyManager.setQsExpansion(qsExpansionFraction);
-        mNotificationStackScroller.setQsExpansionFraction(qsExpansionFraction);
     }
 
     private String determineAccessibilityPaneTitle() {
@@ -2332,7 +2316,6 @@ public class NotificationPanelViewController extends PanelViewController {
             setListening(true);
         }
         mQsExpandImmediate = false;
-        mNotificationStackScroller.setShouldShowShelfOnly(false);
         mTwoFingerQsExpandPossible = false;
         notifyListenersTrackingHeadsUp(null);
         mExpandingFromHeadsUp = false;
@@ -2382,7 +2365,6 @@ public class NotificationPanelViewController extends PanelViewController {
         super.onTrackingStarted();
         if (mQsFullyExpanded) {
             mQsExpandImmediate = true;
-            mNotificationStackScroller.setShouldShowShelfOnly(true);
         }
         if (mBarState == StatusBarState.KEYGUARD || mBarState == StatusBarState.SHADE_LOCKED) {
             mAffordanceHelper.animateHideLeftRightIcon();
@@ -3541,8 +3523,6 @@ public class NotificationPanelViewController extends PanelViewController {
             if (mAccessibilityManager.isEnabled()) {
                 mView.setAccessibilityPaneTitle(determineAccessibilityPaneTitle());
             }
-            mNotificationStackScroller.setMaxTopPadding(
-                    mQsMaxExpansionHeight + mQsNotificationTopPadding);
         }
     }
 
@@ -3695,8 +3675,6 @@ public class NotificationPanelViewController extends PanelViewController {
                     mQsExpansionHeight = mQsMinExpansionHeight;
                 }
                 mQsMaxExpansionHeight = mQs.getDesiredHeight();
-                mNotificationStackScroller.setMaxTopPadding(
-                        mQsMaxExpansionHeight + mQsNotificationTopPadding);
             }
             positionClockAndNotifications();
             if (mQsExpanded && mQsFullyExpanded) {
