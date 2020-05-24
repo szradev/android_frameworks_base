@@ -23,7 +23,7 @@
                         <gradient 
                             android:startColor="?androidprv:attr/colorGradientStart"
                             android:endColor="?androidprv:attr/colorGradientEnd"
-                            android:angle="180"/>
+                            android:angle="360"/>
                     </shape>
                 </item>
             </selector>
