@@ -128,16 +128,20 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
                 Utils.getColorAttrDefaultColor(context, android.R.attr.textColorTertiary));
         mColorInactive = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
 
-        foregroundDrawable.setShaderFactory(new ShaderFactory() {
-            @Override
-            public Shader resize(int width, int height) {
-                LinearGradient gradient = new LinearGradient (0, pathSize, pathSize, 0,
-                        Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.colorGradientStart),
-                        Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.colorGradientEnd),
-                        TileMode.REPEAT);
-                return gradient;
-            }
-        });
+        if (context.getResources().getBoolean(R.bool.qs_tiles_monochrome_style)) {
+            foregroundDrawable.setTintList(ColorStateList.valueOf(context.getColor(R.color.qs_translucent_primary)));
+        } else {
+            foregroundDrawable.setShaderFactory(new ShaderFactory() {
+                @Override
+                public Shader resize(int width, int height) {
+                    LinearGradient gradient = new LinearGradient (0, pathSize, pathSize, 0,
+                            Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.colorGradientStart),
+                            Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.colorGradientEnd),
+                            TileMode.REPEAT);
+                    return gradient;
+                }
+            });
+        }
         backgroundDrawable.setTintList(ColorStateList.valueOf(mColorDisabled));
         if (mStrokeWidthInactive >= 0) {
             backgroundDrawable.getPaint().setStyle(Paint.Style.STROKE);
