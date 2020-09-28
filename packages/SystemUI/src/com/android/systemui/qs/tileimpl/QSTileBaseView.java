@@ -28,7 +28,6 @@ import android.graphics.Shader;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.AdaptiveIconDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RippleDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.ShapeDrawable.ShaderFactory;
 import android.graphics.drawable.shapes.PathShape;
@@ -64,12 +63,9 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     private final int[] mLocInScreen = new int[2];
     private final FrameLayout mIconFrame;
     protected QSIconView mIcon;
-    protected RippleDrawable mRipple;
-    private Drawable mTileBackground;
     private String mAccessibilityClass;
     private boolean mTileState;
     private boolean mCollapsedView;
-    private boolean mShowRippleEffect = true;
     private float mStrokeWidthActive;
     private float mStrokeWidthInactive;
 
@@ -121,12 +117,7 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         mIconFrame.setClipChildren(false);
         mIconFrame.setClipToPadding(false);
 
-        mTileBackground = newTileBackground();
-        if (mTileBackground instanceof RippleDrawable) {
-            setRipple((RippleDrawable) mTileBackground);
-        }
         setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
-        setBackground(mTileBackground);
 
         mColorDisabled = Utils.getDisabled(context,
                 Utils.getColorAttrDefaultColor(context, android.R.attr.textColorTertiary));
@@ -167,29 +158,6 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         return mBg;
     }
 
-    protected Drawable newTileBackground() {
-        final int[] attrs = new int[]{android.R.attr.selectableItemBackgroundBorderless};
-        final TypedArray ta = getContext().obtainStyledAttributes(attrs);
-        final Drawable d = ta.getDrawable(0);
-        ta.recycle();
-        return d;
-    }
-
-    private void setRipple(RippleDrawable tileBackground) {
-        mRipple = tileBackground;
-        if (getWidth() != 0) {
-            updateRippleSize();
-        }
-    }
-
-    private void updateRippleSize() {
-        // center the touch feedback on the center of the icon, and dial it down a bit
-        final int cx = mIconFrame.getMeasuredWidth() / 2 + mIconFrame.getLeft();
-        final int cy = mIconFrame.getMeasuredHeight() / 2 + mIconFrame.getTop();
-        final int rad = (int) (mIcon.getHeight() * .85f);
-        mRipple.setHotspotBounds(cx - rad, cy - rad, cx + rad, cy + rad);
-    }
-
     @Override
     public void init(QSTile tile) {
         init(v -> tile.click(), v -> tile.secondaryClick(), view -> {
@@ -202,14 +170,6 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
             OnLongClickListener longClick) {
         setOnClickListener(click);
         setOnLongClickListener(longClick);
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-        if (mRipple != null) {
-            updateRippleSize();
-        }
     }
 
     @Override
@@ -284,7 +244,6 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
             }
         }
 
-        mShowRippleEffect = state.showRippleEffect;
         setClickable(state.state != Tile.STATE_UNAVAILABLE);
         mTileSpringProvider.setIgnoreTouch(state.state == Tile.STATE_UNAVAILABLE);
         setLongClickable(state.handlesLongClick);
@@ -335,12 +294,6 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         }
         getLocationOnScreen(mLocInScreen);
         return mLocInScreen[1] >= -getHeight();
-    }
-
-    @Override
-    public void setClickable(boolean clickable) {
-        super.setClickable(clickable);
-        setBackground(clickable && mShowRippleEffect ? mRipple : null);
     }
 
     @Override
