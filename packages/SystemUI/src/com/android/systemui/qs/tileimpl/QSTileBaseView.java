@@ -54,6 +54,8 @@ import com.android.systemui.plugins.qs.QSIconView;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
 
+import com.revengeos.revengeui.effect.SpringEffectProvider;
+
 public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
 
     private static final String TAG = "QSTileBaseView";
@@ -77,6 +79,8 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     private final int mColorInactive;
     private final int mColorDisabled;
     private int mBgSize;
+
+    private SpringEffectProvider mTileSpringProvider;
 
 
     public QSTileBaseView(Context context, QSIconView icon) {
@@ -153,6 +157,10 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         setClipToPadding(false);
         mCollapsedView = collapsedView;
         setFocusable(true);
+
+        mTileSpringProvider = new SpringEffectProvider(this);
+        mTileSpringProvider.setViewToAnimate(mIconFrame);
+        mTileSpringProvider.addSpringEffect();
     }
 
     public View getBgCircle() {
@@ -278,6 +286,7 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
 
         mShowRippleEffect = state.showRippleEffect;
         setClickable(state.state != Tile.STATE_UNAVAILABLE);
+        mTileSpringProvider.setIgnoreTouch(state.state == Tile.STATE_UNAVAILABLE);
         setLongClickable(state.handlesLongClick);
         mIcon.setIcon(state, allowAnimations);
         setContentDescription(state.contentDescription);
