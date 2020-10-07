@@ -22,4 +22,6 @@
     <string name="statusbar_items_title">Icon tuner</string>
 
     <string name="clock_title_binary" translatable="false">Binary</string>
+
+    <string name="wday_month_day_no_year_alarm" translatable="false">EEEEMMMMd</string>
 </resources>
