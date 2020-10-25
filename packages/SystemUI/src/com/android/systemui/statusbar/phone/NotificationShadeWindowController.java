@@ -47,6 +47,7 @@ import com.android.systemui.dump.DumpManager;
 import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.plugins.statusbar.StatusBarStateController.StateListener;
+import com.android.systemui.statusbar.BlurUtils;
 import com.android.systemui.statusbar.RemoteInputController.Callback;
 import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.SysuiStatusBarStateController;
@@ -101,6 +102,7 @@ public class NotificationShadeWindowController implements Callback, Dumpable,
     private final SysuiColorExtractor mColorExtractor;
 
     private View mQSBlurScrim;
+    private BlurUtils mBlurUtils;
 
     @Inject
     public NotificationShadeWindowController(Context context, WindowManager windowManager,
@@ -109,7 +111,8 @@ public class NotificationShadeWindowController implements Callback, Dumpable,
             ConfigurationController configurationController,
             KeyguardViewMediator keyguardViewMediator,
             KeyguardBypassController keyguardBypassController, SysuiColorExtractor colorExtractor,
-            DumpManager dumpManager) {
+            DumpManager dumpManager,
+            BlurUtils blurUtils) {
         mContext = context;
         mWindowManager = windowManager;
         mActivityManager = activityManager;
@@ -121,6 +124,8 @@ public class NotificationShadeWindowController implements Callback, Dumpable,
         mKeyguardBypassController = keyguardBypassController;
         mColorExtractor = colorExtractor;
         dumpManager.registerDumpable(getClass().getName(), this);
+
+        mBlurUtils = blurUtils;
 
         mLockScreenDisplayTimeout = context.getResources()
                 .getInteger(R.integer.config_lockScreenDisplayTimeout);
@@ -207,6 +212,7 @@ public class NotificationShadeWindowController implements Callback, Dumpable,
         mWindowManager.addView(mNotificationShadeView, mLp);
         mLpChanged.copyFrom(mLp);
         mQSBlurScrim = mNotificationShadeView.findViewById(R.id.qs_blur_scrim);
+        updateQSBlurScrimColor();
         onThemeChanged();
 
         // Make the state consistent with KeyguardViewMediator#setupLocked during initialization.
@@ -566,6 +572,17 @@ public class NotificationShadeWindowController implements Callback, Dumpable,
         apply(mCurrentState);
     }
 
+    private void updateQSBlurScrimColor() {
+        if (mQSBlurScrim == null) {
+            return;
+        }
+        if (mBlurUtils.supportsBlursOnWindows()) {
+            mQSBlurScrim.setBackgroundColor(mContext.getColor(R.color.qs_blur_scrim));
+        } else {
+            mQSBlurScrim.setBackgroundColor(mContext.getColor(R.color.qs_blur_disabled_scrim));
+        }
+    }
+
     /**
      * Set whether the screen brightness is forced to the value we use for doze mode by the status
      * bar window.
@@ -638,10 +655,7 @@ public class NotificationShadeWindowController implements Callback, Dumpable,
 
     @Override
     public void onUiModeChanged() {
-        if (mQSBlurScrim == null) {
-            return;
-        }
-        mQSBlurScrim.setBackgroundColor(mContext.getColor(R.color.qs_blur_scrim));
+        updateQSBlurScrimColor();
     }
 
     /**

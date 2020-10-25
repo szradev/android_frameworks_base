@@ -56,7 +56,7 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:alpha="0"
-        android:background="@color/qs_blur_scrim"
+        android:background="@color/qs_blur_disabled_scrim"
         sysui:ignoreRightInset="true" />
 
     <include layout="@layout/status_bar_expanded"
