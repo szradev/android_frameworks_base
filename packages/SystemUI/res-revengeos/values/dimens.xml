@@ -57,6 +57,8 @@
     <dimen name="no_notifications_container_top_padding">32dp</dimen>
     <dimen name="no_notifications_text_size">24sp</dimen>
 
+    <dimen name="floating_card_elevation">9dp</dimen>
+
     <!-- Volume dialog -->
     <dimen name="volume_dialog_panel_transparent_padding_left_right">8dp</dimen>
     <dimen name="volume_dialog_panel_transparent_padding">20dp</dimen>
@@ -68,7 +70,7 @@
     <dimen name="volume_dialog_row_icon_size">24dp</dimen>
     <dimen name="volume_dialog_row_icon_bottom_margin">@dimen/volume_dialog_panel_row_radius</dimen>
     <dimen name="volume_dialog_row_spacer">@dimen/volume_dialog_spacer</dimen>
-    <dimen name="volume_dialog_elevation">9dp</dimen>
+    <dimen name="volume_dialog_elevation">@dimen/floating_card_elevation</dimen>
 
     <dimen name="volume_tool_tip_arrow_height">8dp</dimen>
     <dimen name="volume_tool_tip_arrow_width">10dp</dimen>
