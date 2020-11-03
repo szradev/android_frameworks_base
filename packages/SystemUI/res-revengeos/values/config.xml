@@ -23,4 +23,14 @@
 
     <!-- Whether to use monochrome QS Tiles style -->
     <bool name="qs_tiles_monochrome_style">true</bool>
+    
+     <!-- Max visible status icons -->
+     <integer name="config_maxVisibleStatusIcons">7</integer>
+
+     <!-- Max visible notification icons -->
+    <integer name="config_maxVisibleNotificationIcons">4</integer>
+    <integer name="config_maxVisibleNotificationIconsWhenDark">5</integer>
+
+     <!-- Whether SystemUI ignores notch -->
+     <bool name="hide_view_behind_notch">false</bool>
 </resources>

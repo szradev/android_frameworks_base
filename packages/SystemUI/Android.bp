@@ -74,6 +74,7 @@ android_library {
         "vendor.lineage.biometrics.fingerprint.inscreen-V1.0-java",
         "RevengeUI-lib",
         "overscroll-decor",
+        "WeatherIcons",
     ],
     manifest: "AndroidManifest.xml",
 
