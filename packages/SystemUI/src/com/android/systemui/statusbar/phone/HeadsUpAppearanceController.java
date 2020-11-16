@@ -422,7 +422,6 @@ public class HeadsUpAppearanceController implements OnHeadsUpChangedListener,
         ExpandableNotificationRow previousTracked = mTrackedChild;
         mTrackedChild = trackedChild;
         if (previousTracked != null) {
-            previousTracked.forceDimmedBackground(false);
             updateHeader(previousTracked.getEntry());
         }
     }

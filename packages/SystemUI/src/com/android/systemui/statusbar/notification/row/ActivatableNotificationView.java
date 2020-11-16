@@ -608,14 +608,6 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
         mBackgroundDimmed.setBottomAmountClips(!isChildInGroup());
     }
 
-    public void forceDimmedBackground(boolean value) {
-        if (value) {
-            mBackgroundDimmed.setVisibility(View.VISIBLE);
-        } else {
-            mBackgroundDimmed.setVisibility(mDimmed ? View.VISIBLE : View.INVISIBLE);
-        }
-    }
-
     protected boolean shouldHideBackground() {
         return false;
     }
@@ -681,7 +673,6 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
             startAppearAnimation(true /* isAppearing */, isHeadsUpAppear ? 0.0f : -1.0f, delay,
                     duration, null, null);
         }
-        forceDimmedBackground(isHeadsUpAppear);
     }
 
     private void startAppearAnimation(boolean isAppearing, float translationDirection, long delay,
@@ -742,9 +733,6 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
                 if (!mWasCancelled) {
                     enableAppearDrawing(false);
                     onAppearAnimationFinished(isAppearing);
-                }
-                if(!isAppearing) {
-                    forceDimmedBackground(false);
                 }
             }
 
