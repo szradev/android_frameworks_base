@@ -117,7 +117,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10105,10 +10104,6 @@ public class TelephonyManager {
         if (SubscriptionManager.isValidPhoneId(phoneId)) {
             List<String> newList = updateTelephonyProperty(
                     TelephonyProperties.baseband_version(), phoneId, version);
-            if (mContext.getResources().getBoolean(
-                    com.android.internal.R.bool.config_trim_baseband_version_string)) {
-                newList = Arrays.asList(newList.get(0));
-            }
             TelephonyProperties.baseband_version(newList);
         }
     }
