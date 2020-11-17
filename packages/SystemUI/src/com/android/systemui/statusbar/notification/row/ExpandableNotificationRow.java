@@ -720,7 +720,11 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
 
     @Override
     public boolean showingPulsing() {
-        return isHeadsUpState() && (isDozing() || (mOnKeyguard && isBypassEnabled()));
+        boolean isPulsing = isDozing() || (mOnKeyguard && isBypassEnabled());
+        if (isPulsing) {
+            forceDimmedBackground(true);
+        }
+        return isHeadsUpState() && isPulsing;
     }
 
     /**

@@ -187,6 +187,7 @@ public class HeadsUpAppearanceController implements OnHeadsUpChangedListener,
     @Override
     public void onHeadsUpPinned(NotificationEntry entry) {
         updateTopEntry();
+        updateHeadsUpBackground(entry);
         updateHeader(entry);
     }
 
@@ -391,6 +392,7 @@ public class HeadsUpAppearanceController implements OnHeadsUpChangedListener,
     @Override
     public void onHeadsUpUnPinned(NotificationEntry entry) {
         updateTopEntry();
+        updateHeadsUpBackground(entry);
         updateHeader(entry);
     }
 
@@ -423,6 +425,7 @@ public class HeadsUpAppearanceController implements OnHeadsUpChangedListener,
         mTrackedChild = trackedChild;
         if (previousTracked != null) {
             updateHeader(previousTracked.getEntry());
+            updateHeadsUpBackground(previousTracked.getEntry());
         }
     }
 
@@ -430,6 +433,13 @@ public class HeadsUpAppearanceController implements OnHeadsUpChangedListener,
         mHeadsUpManager.getAllEntries().forEach(entry -> {
             updateHeader(entry);
         });
+    }
+
+    private void updateHeadsUpBackground(NotificationEntry entry) {
+        ExpandableNotificationRow row = entry.getRow();
+        row.forceDimmedBackground(row != mTrackedChild
+                && (row.isPinned() || row.showingPulsing())
+                && !row.isHeadsUpAnimatingAway());
     }
 
     public void updateHeader(NotificationEntry entry) {
