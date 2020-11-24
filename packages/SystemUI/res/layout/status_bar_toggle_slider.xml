@@ -40,9 +40,7 @@
         android:paddingEnd="20dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:thumb="@null"
-        android:progressDrawable="@drawable/brightness_progress_drawable"
-        />
+        style="@style/QSBrightnessThiccBar" />
     <TextView
         android:id="@+id/label"
         android:layout_width="0dp"
