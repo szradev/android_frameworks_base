@@ -59,6 +59,11 @@ class PlayerViewHolder private constructor(itemView: View) {
     val action3 = itemView.requireViewById<ImageButton>(R.id.action3)
     val action4 = itemView.requireViewById<ImageButton>(R.id.action4)
 
+    // Settings screen
+    val cancel = itemView.requireViewById<View>(R.id.cancel)
+    val dismiss = itemView.requireViewById<View>(R.id.dismiss)
+    val settings = itemView.requireViewById<View>(R.id.settings)
+
     fun getAction(id: Int): ImageButton {
         return when (id) {
             R.id.action0 -> action0
@@ -71,9 +76,6 @@ class PlayerViewHolder private constructor(itemView: View) {
             }
         }
     }
-
-    // Settings screen
-    val options = itemView.requireViewById<View>(R.id.qs_media_controls_options)
 
     companion object {
         /**
@@ -94,5 +96,29 @@ class PlayerViewHolder private constructor(itemView: View) {
                 progressTimes.layoutDirection = View.LAYOUT_DIRECTION_LTR
             }
         }
+
+        val controlsIds = setOf(
+                R.id.icon,
+                R.id.app_name,
+                R.id.album_art,
+                R.id.header_title,
+                R.id.header_artist,
+                R.id.media_seamless,
+                R.id.notification_media_progress_time,
+                R.id.media_progress_bar,
+                R.id.action0,
+                R.id.action1,
+                R.id.action2,
+                R.id.action3,
+                R.id.action4,
+                R.id.icon
+        )
+        val gutsIds = setOf(
+                R.id.media_text,
+                R.id.remove_text,
+                R.id.cancel,
+                R.id.dismiss,
+                R.id.settings
+        )
     }
 }

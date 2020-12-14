@@ -83,6 +83,10 @@ data class MediaData(
      */
     var resumeAction: Runnable?,
     /**
+     * Local or remote playback
+     */
+    var isLocalSession: Boolean = true,
+    /**
      * Indicates that this player is a resumption player (ie. It only shows a play actions which
      * will start the app and start playing).
      */
@@ -91,7 +95,17 @@ data class MediaData(
      * Notification key for cancelling a media player after a timeout (when not using resumption.)
      */
     val notificationKey: String? = null,
-    var hasCheckedForResume: Boolean = false
+    var hasCheckedForResume: Boolean = false,
+
+    /**
+     * If apps do not report PlaybackState, set as null to imply 'undetermined'
+     */
+    val isPlaying: Boolean? = null,
+
+    /**
+     * Set from the notification and used as fallback when PlaybackState cannot be determined
+     */
+    val isClearable: Boolean = true
 )
 
 /** State of a media action. */

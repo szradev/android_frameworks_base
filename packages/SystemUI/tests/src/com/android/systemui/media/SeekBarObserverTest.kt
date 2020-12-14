@@ -71,7 +71,7 @@ public class SeekBarObserverTest : SysuiTestCase() {
     fun seekBarGone() {
         // WHEN seek bar is disabled
         val isEnabled = false
-        val data = SeekBarViewModel.Progress(isEnabled, false, null, null, null)
+        val data = SeekBarViewModel.Progress(isEnabled, false, null, 0, null)
         observer.onChanged(data)
         // THEN seek bar shows just a thin line with no text
         assertThat(seekBarView.isEnabled()).isFalse()
@@ -96,11 +96,11 @@ public class SeekBarObserverTest : SysuiTestCase() {
 
     @Test
     fun seekBarProgress() {
-        // WHEN seek bar progress is about half
-        val data = SeekBarViewModel.Progress(true, true, 3000, 12000, -10)
+        // WHEN part of the track has been played
+        val data = SeekBarViewModel.Progress(true, true, 3000, 120000, -10)
         observer.onChanged(data)
-        // THEN seek bar is visible
-        assertThat(seekBarView.progress).isEqualTo(100)
+        // THEN seek bar shows the progress
+        assertThat(seekBarView.progress).isEqualTo(3000)
         assertThat(seekBarView.max).isEqualTo(120000)
         assertThat(elapsedTimeView.getText()).isEqualTo("00:03")
         assertThat(totalTimeView.getText()).isEqualTo("02:00")
