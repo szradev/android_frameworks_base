@@ -278,6 +278,12 @@ public class MediaControlPanel {
         artistText.setText(data.getArtist());
         artistText.setTextColor(mForegroundColor);
 
+        mViewHolder.getMediaText().setTextColor(mForegroundColor);
+        mViewHolder.getRemoveText().setTextColor(mForegroundColor);
+        mViewHolder.getCancelText().setTextColor(mForegroundColor);
+        mViewHolder.getDismissText().setTextColor(mForegroundColor);
+        mViewHolder.getSettingsText().setTextColor(mForegroundColor);
+
         // Transfer chip
         mViewHolder.getSeamless().setVisibility(View.VISIBLE);
         setVisibleAndAlpha(collapsedSet, R.id.media_seamless, true /*visible */);

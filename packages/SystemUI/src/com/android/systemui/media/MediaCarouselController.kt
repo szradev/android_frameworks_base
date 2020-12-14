@@ -492,7 +492,7 @@ class MediaCarouselController @Inject constructor(
     }
 
     private fun setCarouselTranslucent(value : Boolean) {
-        for (mediaPlayer in mediaPlayers.values) {
+        for (mediaPlayer in MediaPlayerData.players()) {
             mediaPlayer.setTranslucentBackground(value)
         }
     }

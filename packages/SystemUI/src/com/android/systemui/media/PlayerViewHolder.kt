@@ -64,6 +64,12 @@ class PlayerViewHolder private constructor(itemView: View) {
     val dismiss = itemView.requireViewById<View>(R.id.dismiss)
     val settings = itemView.requireViewById<View>(R.id.settings)
 
+    val mediaText = itemView.requireViewById<TextView>(R.id.media_text)
+    val removeText = itemView.requireViewById<TextView>(R.id.remove_text)
+    val cancelText = itemView.requireViewById<TextView>(R.id.cancel_text)
+    val dismissText = itemView.requireViewById<TextView>(R.id.dismiss_text)
+    val settingsText = itemView.requireViewById<TextView>(R.id.settings_text)
+
     fun getAction(id: Int): ImageButton {
         return when (id) {
             R.id.action0 -> action0
