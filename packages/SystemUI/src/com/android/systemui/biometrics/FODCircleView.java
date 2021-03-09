@@ -174,8 +174,20 @@ public class FODCircleView extends ImageView {
         }
 
         @Override
+        public void onStartedGoingToSleep(int why) {
+         hide();
+       }
+
+        @Override
         public void onScreenTurnedOff() {
-            hide();
+          //  hide();
+        }
+
+        @Override
+        public void onStartedWakingUp() {
+            if (mUpdateMonitor.isFingerprintDetectionRunning()) {
+                show();
+            }
         }
 
         @Override
