@@ -20,7 +20,7 @@
 
     <!-- Whether usage of the proximity sensor during doze is supported -->
     <bool name="doze_proximity_sensor_supported">true</bool>
-    
+
      <!-- Max visible status icons -->
      <integer name="config_maxVisibleStatusIcons">7</integer>
 
@@ -34,4 +34,10 @@
     <!-- Burn in protection -->
     <bool name="config_statusBarBurnInProtection">true</bool>
     <integer name="config_shift_interval">60</integer>
+
+    <string-array name="config_pluginWhitelist" translatable="false">
+     <item>com.android.systemui</item>
+     <item>com.android.systemui.plugin.globalactions.wallet</item>
+   </string-array>
+
 </resources>
